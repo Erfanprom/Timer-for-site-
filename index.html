@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>شمارش معکوس ۵ ماهه ⏳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
+<style>
+/* ============ تنظیمات پایه ============ */
+@property --ang { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+html,body{ height:100%; }
+
+body{
+  font-family:'Vazirmatn', system-ui, sans-serif;
+  background:#04010c;
+  color:#fff;
+  overflow-x:hidden;
+  position:relative;
+  min-height:100dvh;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ============ لایه‌های پس‌زمینه ============ */
+#fx{ position:fixed; inset:0; z-index:1; pointer-events:none; }
+
+.aurora{
+  position:fixed; inset:0; z-index:0;
+  pointer-events:none; filter:blur(90px); opacity:.6;
+}
+.blob{ position:absolute; border-radius:50%; mix-blend-mode:screen; }
+.b1{ width:65vmax; height:65vmax; top:-22vmax; left:-18vmax;
+     background:radial-gradient(circle,#00f5d4,transparent 62%);
+     animation:drift1 19s ease-in-out infinite alternate; }
+.b2{ width:55vmax; height:55vmax; bottom:-20vmax; right:-14vmax;
+     background:radial-gradient(circle,#9b5de5,transparent 62%);
+     animation:drift2 23s ease-in-out infinite alternate; }
+.b3{ width:45vmax; height:45vmax; top:35%; left:55%;
+     background:radial-gradient(circle,#f15bb5,transparent 62%);
+     animation:drift3 17s ease-in-out infinite alternate; }
+.b4{ width:38vmax; height:38vmax; bottom:5%; left:10%;
+     background:radial-gradient(circle,#fee440,transparent 62%);
+     opacity:.5; animation:drift1 26s ease-in-out infinite alternate-reverse; }
+
+@keyframes drift1{ to{ transform:translate(14vmax,10vmax) scale(1.15); } }
+@keyframes drift2{ to{ transform:translate(-12vmax,-9vmax) scale(1.2); } }
+@keyframes drift3{ to{ transform:translate(-10vmax,12vmax) scale(.85); } }
+
+/* شبکه‌ی نقطه‌چین */
+.grid{
+  position:fixed; inset:0; z-index:2; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image:radial-gradient(circle at 50% 45%, #000 15%, transparent 72%);
+  mask-image:radial-gradient(circle at 50% 45%, #000 15%, transparent 72%);
+}
+
+/* وینیت */
+.vignette{
+  position:fixed; inset:0; z-index:3; pointer-events:none;
+  background:radial-gradient(circle at 50% 45%, transparent 30%, rgba(2,0,8,.85) 100%);
+}
+
+/* ============ محتوا ============ */
+main{
+  position:relative; z-index:4;
+  min-height:100dvh;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  gap:clamp(14px,3vh,34px);
+  padding:clamp(16px,4vw,48px) 16px;
+  text-align:center;
+}
+
+/* عنوان */
+.title{
+  font-size:clamp(1.7rem,5.5vw,3.6rem);
+  font-weight:900;
+  letter-spacing:-.02em;
+  background:linear-gradient(100deg,#00f5d4,#9b5de5,#f15bb5,#fee440,#00f5d4);
+  background-size:300% 100%;
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+  animation:gradShift 8s linear infinite;
+  filter:drop-shadow(0 0 26px rgba(155,93,229,.75));
+}
+@keyframes gradShift{ to{ background-position:300% 0; } }
+
+.subtitle{
+  font-size:clamp(.8rem,2.4vw,1.05rem);
+  font-weight:500;
+  color:rgba(255,255,255,.62);
+  letter-spacing:.06em;
+  margin-top:-6px;
+}
+.subtitle b{ color:#00f5d4; font-weight:700; }
+
+/* ============ تایمر ============ */
+.timer{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:clamp(8px,1.8vw,26px);
+  width:min(1120px,94vw);
+  margin-top:clamp(6px,1.5vh,18px);
+}
+
+.unit{
+  position:relative;
+  isolation:isolate;
+  display:flex;
+}
+
+/* هاله‌ی چرخان */
+.unit::before{
+  content:'';
+  position:absolute; inset:-5px;
+  border-radius:32px;
+  background:conic-gradient(from var(--ang),
+    var(--g1), var(--g2), var(--g3), var(--g1));
+  filter:blur(16px);
+  opacity:.62;
+  z-index:-1;
+  animation:spinAng 5.5s linear infinite;
+}
+@keyframes spinAng{ to{ --ang:360deg; } }
+
+.unit-inner{
+  flex:1;
+  position:relative;
+  border-radius:26px;
+  padding:clamp(12px,2.6vw,30px) clamp(6px,1.4vw,18px);
+  background:linear-gradient(160deg, rgba(255,255,255,.09), rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.14);
+  backdrop-filter:blur(16px) saturate(150%);
+  -webkit-backdrop-filter:blur(16px) saturate(150%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.18),
+    inset 0 -18px 34px rgba(0,0,0,.5),
+    0 18px 44px rgba(0,0,0,.55);
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  gap:clamp(4px,1vw,10px);
+  overflow:hidden;
+}
+/* براقی روی کارت */
+.unit-inner::after{
+  content:'';
+  position:absolute; top:-60%; left:-70%;
+  width:60%; height:220%;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.16), transparent);
+  transform:rotate(22deg);
+  animation:sweep 6s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes sweep{
+  0%,70%{ left:-70%; }
+  100%{ left:130%; }
+}
+
+.num{
+  display:block;
+  font-size:clamp(1.75rem,6.6vw,4.4rem);
+  font-weight:900;
+  line-height:1;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:-.02em;
+  background:linear-gradient(180deg,#ffffff 8%, var(--g1) 55%, var(--g2) 100%);
+  -webkit-background-clip:text; background-clip:text;
+  color:transparent;
+  filter:drop-shadow(0 0 16px var(--glow)) drop-shadow(0 0 42px var(--glow));
+  transition:transform .18s cubic-bezier(.34,1.56,.64,1);
+}
+.num.tick{ transform:scale(1.13); }
+
+.label{
+  font-size:clamp(.62rem,1.9vw,.9rem);
+  font-weight:700;
+  letter-spacing:.22em;
+  color:rgba(255,255,255,.55);
+  text-transform:uppercase;
+}
+
+/* رنگ‌بندی هر واحد */
+.u-days   { --g1:#00f5d4; --g2:#00bbf9; --g3:#9b5de5; --glow:rgba(0,245,212,.55); }
+.u-hours  { --g1:#9b5de5; --g2:#7b2ff7; --g3:#f15bb5; --glow:rgba(155,93,229,.6); }
+.u-minutes{ --g1:#f15bb5; --g2:#e84393; --g3:#fee440; --glow:rgba(241,91,181,.6); }
+.u-seconds{ --g1:#fee440; --g2:#f9a826; --g3:#00f5d4; --glow:rgba(254,228,64,.55); }
+
+/* ============ نوار پیشرفت ============ */
+.progress-wrap{
+  width:min(760px,90vw);
+  display:flex; flex-direction:column; gap:10px;
+}
+.bar{
+  height:11px; border-radius:99px;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.09);
+  overflow:hidden;
+  position:relative;
+  box-shadow:inset 0 2px 6px rgba(0,0,0,.6);
+}
+.fill{
+  height:100%; width:0%;
+  border-radius:99px;
+  background:linear-gradient(90deg,#00f5d4,#9b5de5,#f15bb5,#fee440);
+  background-size:200% 100%;
+  box-shadow:0 0 18px rgba(155,93,229,.9), 0 0 36px rgba(241,91,181,.55);
+  transition:width .5s ease;
+  position:relative;
+  animation:gradShift 6s linear infinite;
+}
+.fill::after{
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.8),transparent);
+  animation:shimmer 2.2s linear infinite;
+}
+@keyframes shimmer{ from{ transform:translateX(-100%);} to{ transform:translateX(100%);} }
+
+.progress-meta{
+  display:flex; justify-content:space-between;
+  font-size:clamp(.68rem,2vw,.85rem);
+  color:rgba(255,255,255,.45);
+  font-weight:600;
+}
+.progress-meta span b{ color:#00f5d4; }
+
+/* ============ پایان ============ */
+.done-msg{
+  display:none;
+  font-size:clamp(1.2rem,4vw,2.2rem);
+  font-weight:900;
+  background:linear-gradient(90deg,#00f5d4,#fee440,#f15bb5);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  filter:drop-shadow(0 0 24px rgba(254,228,64,.8));
+  animation:pulse 1.2s ease-in-out infinite;
+}
+@keyframes pulse{ 50%{ transform:scale(1.06); } }
+body.finished .done-msg{ display:block; }
+
+/* ============ ریسپانسیو ============ */
+@media (max-width:620px){
+  .timer{ grid-template-columns:repeat(2,1fr); gap:12px; }
+  .num{ font-size:clamp(2rem,13vw,3.2rem); }
+  .label{ letter-spacing:.14em; }
+}
+@media (prefers-reduced-motion:reduce){
+  *{ animation-duration:.001s !important; animation-iteration-count:1 !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- پس‌زمینه -->
+<div class="aurora">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+  <div class="blob b4"></div>
+</div>
+<canvas id="fx"></canvas>
+<div class="grid"></div>
+<div class="vignette"></div>
+
+<!-- محتوا -->
+<main>
+  <h1 class="title">شمارش معکوس</h1>
+  <p class="subtitle">تا <b id="targetDate">—</b></p>
+
+  <div class="timer">
+    <div class="unit u-days">
+      <div class="unit-inner">
+        <span class="num" id="days">۰۰۰</span>
+        <span class="label">روز</span>
+      </div>
+    </div>
+    <div class="unit u-hours">
+      <div class="unit-inner">
+        <span class="num" id="hours">۰۰</span>
+        <span class="label">ساعت</span>
+      </div>
+    </div>
+    <div class="unit u-minutes">
+      <div class="unit-inner">
+        <span class="num" id="minutes">۰۰</span>
+        <span class="label">دقیقه</span>
+      </div>
+    </div>
+    <div class="unit u-seconds">
+      <div class="unit-inner">
+        <span class="num" id="seconds">۰۰</span>
+        <span class="label">ثانیه</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="bar"><div class="fill" id="fill"></div></div>
+    <div class="progress-meta">
+      <span>پیشرفت: <b id="pct">۰٪</b></span>
+      <span id="remainText">—</span>
+    </div>
+  </div>
+
+  <div class="done-msg">🎉 زمان تمام شد! 🎉</div>
+</main>
+
+<script>
+/* =========================================================
+   ۱) محاسبه‌ی هدف (۵ ماه از اولین بازدید) + ذخیره در مرورگر
+   ========================================================= */
+const KEY_START  = 'cd5m_start';
+const KEY_TARGET = 'cd5m_target';
+
+let startMs  = Number(localStorage.getItem(KEY_START));
+let targetMs = Number(localStorage.getItem(KEY_TARGET));
+
+if (!startMs || !targetMs || isNaN(startMs) || isNaN(targetMs)) {
+  startMs = Date.now();
+  const t = new Date(startMs);
+  t.setMonth(t.getMonth() + 5);   // دقیقاً ۵ ماه
+  targetMs = t.getTime();
+  localStorage.setItem(KEY_START, startMs);
+  localStorage.setItem(KEY_TARGET, targetMs);
+}
+
+const TOTAL = targetMs - startMs;
+
+/* =========================================================
+   ۲) اعداد فارسی
+   ========================================================= */
+const FA = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+const faNum = n => String(n).replace(/\d/g, d => FA[+d]);
+const pad = (n, len = 2) => String(n).padStart(len, '0');
+
+/* =========================================================
+   ۳) نمایش تاریخ هدف
+   ========================================================= */
+try {
+  document.getElementById('targetDate').textContent =
+    new Date(targetMs).toLocaleDateString('fa-IR', {
+      year: 'numeric', month: 'long', day: 'numeric'
+    });
+} catch (e) {
+  document.getElementById('targetDate').textContent =
+    new Date(targetMs).toLocaleDateString();
+}
+
+/* =========================================================
+   ۴) المان‌ها
+   ========================================================= */
+const el = {
+  d: document.getElementById('days'),
+  h: document.getElementById('hours'),
+  m: document.getElementById('minutes'),
+  s: document.getElementById('seconds'),
+  fill: document.getElementById('fill'),
+  pct: document.getElementById('pct'),
+  remain: document.getElementById('remainText')
+};
+
+const prev = { d: '', h: '', m: '', s: '' };
+
+function setVal(key, node, text) {
+  if (prev[key] === text) return;
+  prev[key] = text;
+  node.textContent = text;
+  node.classList.remove('tick');
+  void node.offsetWidth;          // ری‌فلو برای اجرای مجدد انیمیشن
+  node.classList.add('tick');
+  setTimeout(() => node.classList.remove('tick'), 190);
+}
+
+/* =========================================================
+   ۵) حلقه‌ی اصلی شمارش
+   ========================================================= */
+let finished = false;
+
+function update() {
+  const now = Date.now();
+  let diff = targetMs - now;
+
+  if (diff <= 0) {
+    diff = 0;
+    if (!finished) {
+      finished = true;
+      document.body.classList.add('finished');
+      celebrate();
+    }
+  }
+
+  const totalSec = Math.floor(diff / 1000);
+  const days    = Math.floor(totalSec / 86400);
+  const hours   = Math.floor((totalSec % 86400) / 3600);
+  const minutes = Math.floor((totalSec % 3600) / 60);
+  const seconds = totalSec % 60;
+
+  setVal('d', el.d, faNum(pad(days, 3)));
+  setVal('h', el.h, faNum(pad(hours)));
+  setVal('m', el.m, faNum(pad(minutes)));
+  setVal('s', el.s, faNum(pad(seconds)));
+
+  // نوار پیشرفت
+  const elapsed = Math.min(Math.max(now - startMs, 0), TOTAL);
+  const pct = TOTAL > 0 ? (elapsed / TOTAL) * 100 : 100;
+  el.fill.style.width = pct.toFixed(3) + '%';
+  el.pct.textContent = faNum(Math.floor(pct)) + '٪';
+
+  // متن باقی‌مانده
+  if (diff > 0) {
+    el.remain.textContent = 'باقی‌مانده: ' +
+      faNum(days) + ' روز و ' + faNum(hours) + ' ساعت';
+  } else {
+    el.remain.textContent = 'به پایان رسید ✨';
+  }
+}
+
+update();
+setInterval(update, 200);
+
+/* =========================================================
+   ۶) ذرات و خطوط اتصال روی بوم
+   ========================================================= */
+const cvs = document.getElementById('fx');
+const ctx = cvs.getContext('2d');
+const DPR = Math.min(window.devicePixelRatio || 1, 2);
+const COLORS = ['#00f5d4', '#9b5de5', '#f15bb5', '#fee440', '#00bbf9', '#ffffff'];
+
+let W = 0, H = 0, particles = [];
+const mouse = { x: -9999, y: -9999 };
+
+function initParticles() {
+  const count = Math.min(150, Math.max(45, Math.floor((W * H) / 13000)));
+  particles = [];
+  for (let i = 0; i < count; i++) {
+    particles.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.38,
+      vy: (Math.random() - 0.5) * 0.38,
+      r: Math.random() * 1.9 + 0.6,
+      c: COLORS[(Math.random() * COLORS.length) | 0],
+      a: Math.random() * 0.5 + 0.35
+    });
+  }
+}
+
+function resize() {
+  W = window.innerWidth;
+  H = window.innerHeight;
+  cvs.width = W * DPR;
+  cvs.height = H * DPR;
+  cvs.style.width = W + 'px';
+  cvs.style.height = H + 'px';
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  initParticles();
+}
+
+window.addEventListener('resize', resize);
+window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+window.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+window.addEventListener('touchmove', e => {
+  if (e.touches[0]) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; }
+}, { passive: true });
+
+const LINK_DIST = 130;
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+
+  // خطوط اتصال
+  for (let i = 0; i < particles.length; i++) {
+    const p = particles[i];
+    for (let j = i + 1; j < particles.length; j++) {
+      const q = particles[j];
+      const dx = p.x - q.x, dy = p.y - q.y;
+      const d2 = dx * dx + dy * dy;
+      if (d2 < LINK_DIST * LINK_DIST) {
+        const alpha = (1 - Math.sqrt(d2) / LINK_DIST) * 0.28;
+        ctx.strokeStyle = 'rgba(155,93,229,' + alpha.toFixed(3) + ')';
+        ctx.lineWidth = 0.8;
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(q.x, q.y);
+        ctx.stroke();
+      }
+    }
+  }
+
+  // ذرات
+  for (const p of particles) {
+    // حرکت
+    p.x += p.vx;
+    p.y += p.vy;
+
+    // برخورد با لبه‌ها
+    if (p.x < -20) p.x = W + 20;
+    if (p.x > W + 20) p.x = -20;
+    if (p.y < -20) p.y = H + 20;
+    if (p.y > H + 20) p.y = -20;
+
+    // دفع از موس
+    const dx = p.x - mouse.x, dy = p.y - mouse.y;
+    const d2 = dx * dx + dy * dy;
+    if (d2 < 14000 && d2 > 0.01) {
+      const f = (14000 - d2) / 14000;
+      const d = Math.sqrt(d2);
+      p.x += (dx / d) * f * 2.6;
+      p.y += (dy / d) * f * 2.6;
+    }
+
+    // رسم
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = p.c;
+    ctx.globalAlpha = p.a;
+    ctx.shadowBlur = 12;
+    ctx.shadowColor = p.c;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
+  }
+
+  requestAnimationFrame(draw);
+}
+
+resize();
+draw();
+
+/* =========================================================
+   ۷) جشن پایان 🎉
+   ========================================================= */
+function celebrate() {
+  const colors = ['#00f5d4', '#9b5de5', '#f15bb5', '#fee440', '#00bbf9'];
+  for (let i = 0; i < 140; i++) {
+    const c = document.createElement('div');
+    const size = Math.random() * 9 + 4;
+    c.style.cssText = `
+      position:fixed; z-index:99; pointer-events:none;
+      left:${Math.random() * 100}vw; top:-20px;
+      width:${size}px; height:${size * 1.6}px;
+      background:${colors[(Math.random() * colors.length) | 0]};
+      border-radius:${Math.random() > 0.5 ? '50%' : '2px'};
+      opacity:0.95;
+      transform:rotate(${Math.random() * 360}deg);
+    `;
+    document.body.appendChild(c);
+
+    const dur = 2200 + Math.random() * 2200;
+    c.animate([
+      { transform: `translateY(0) rotate(0deg)`, opacity: 1 },
+      { transform: `translateY(${window.innerHeight + 80}px) rotate(${720 + Math.random() * 720}deg)`, opacity: 0 }
+    ], {
+      duration: dur,
+      easing: 'cubic-bezier(.25,.6,.4,1)',
+      delay: Math.random() * 900
+    }).onfinish = () => c.remove();
+  }
+}
+</script>
+</body>
+</html>
